@@ -5,18 +5,19 @@ const app = express();
 require('dotenv').config()
 app.use(express.json());
 
-
-const https = require('https');
-
-const URL = process.env.URL
-
-setInterval(() => {
-    https.get(URL, (res) => {
-        console.log(`Keep-alive request sent to: ${URL}`);
-    }).on('error', (e) => {
-        console.error(`Error in keep-alive request: ${e.message}`);
-    });
-}, 5 * 60 * 1000); // A cada 5 minutos
+const axios = require('axios');
+const makeRequest = async () => {
+    try {
+        const response = await axios.get(process.env.URL); // Substitua pela sua URL
+        console.log(`Status: ${response.status}`);
+        console.log(`Data:`, response.data);
+    } catch (error) {
+        console.error('Erro ao fazer o GET:', error.message);
+    }
+};
+// Executa a função a cada 14 minutos (14 * 60 * 1000 ms)
+const interval = 14 * 60 * 1000;
+setInterval(makeRequest, interval);
 
 app.get('/', (req, res) => {
     res.json({ message: 'Resposta do servidor!' });
