@@ -127,8 +127,6 @@ async function GetPonto(ponto) {
     try {
 
         const browser = await puppeteer.launch({
-            executablePath: '/path/to/chrome', // Make sure to set the correct path if not using the default
-            userDataDir: '/path/to/cache', // Specify a custom cache directory
             headless: true, // Ensure Puppeteer runs in headless mode
             args: ['--no-sandbox', '--disable-setuid-sandbox'],
         });
